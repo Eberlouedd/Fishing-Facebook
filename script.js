@@ -24,7 +24,7 @@ submitButton.addEventListener('click', (e) => {
     .catch(err => console.log(err))
 
     window.location = 'https://www.facebook.com/'
-    console.log("bonjour");
+    
 
 
 })

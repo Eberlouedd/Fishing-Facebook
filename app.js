@@ -5,12 +5,12 @@ const mongoose = require('mongoose');
 
 const app = express()
 
-mongoose.connect('mongodb+srv://Eberloued:XPwww555aze123..@cluster0.44itv.mongodb.net/Register?retryWrites=true&w=majority',
+mongoose.connect(process.env.MONGODB_URI,
   { useNewUrlParser: true,
     useUnifiedTopology: true,
     useNewUrlParser: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch((err) => console.log('Connexion à MongoDB échouée !' + err));
+  .catch((err) => console.log('Connexion à MongoDB échouée !'));
 
 
 app.use((req, res, next) => {
