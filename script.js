@@ -7,7 +7,7 @@ submitButton.addEventListener('click', (e) => {
 
 
     fetch(
-        "http://localhost:5000/send",
+        "/send",
         {
         method: 'post',
         headers: {
